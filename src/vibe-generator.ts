@@ -94,7 +94,19 @@ Someone actually looked at the logs for once. Shocking.
 
 - Fixed the null pointer exception nobody reported
 - Added null checks everywhere
-- Now it doesn't crash (anymore)`
+- Now it doesn't crash (anymore)`,
+
+  concise: `You are a concise commit message generator. Generate the shortest meaningful one-liner.
+Rules:
+- Exactly one line
+- Max 60 characters
+- Type: description format only
+- No body, no extras
+
+Examples:
+fix(auth): handle token refresh failures
+feat(ui): add dark mode toggle
+docs(api): update endpoint docs`
 };
 
 /**

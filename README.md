@@ -2,9 +2,9 @@
 
 **AI-Powered Commit Message Generator with Vibes** ✨
 
-Generate meaningful, Conventional Commit-style messages with personality — powered by local AI models.
+Generate meaningful, Conventional Commit-style messages with personality — powered by local AI models. Now with pre-commit hooks, custom templates, and interactive CLI.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/aardenne/vibecommit/releases)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](https://github.com/aardenne/vibecommit/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933)](https://nodejs.org/)
@@ -13,11 +13,14 @@ Generate meaningful, Conventional Commit-style messages with personality — pow
 
 ## ✨ Features
 
-- 🎭 **7 Vibe Modes**: Professional, Enterprise, Minimal, Funny, Creative, Sarcastic
-- 🌍 **Multi-language**: English, Dutch, German, French
-- 🔍 **Git Diff Analysis**: Automatically reads staged or working directory changes
+- 🎭 **7 Vibe Modes**: Professional, Enterprise, Minimal, Funny, Creative, Sarcastic, Concise
+- 🌍 **Multi-language**: English, Dutch, German, French, Spanish
+- 📊 **Git Diff Analysis**: Automatically reads staged or working directory changes
 - 🤖 **Local AI-First**: Works with Ollama, vLLM, LM Studio, and any OpenAI-compatible API
-- 💻 **CLI Tool**: Simple command-line interface with sensible defaults
+- 🎣 **Pre-commit Hooks**: Auto-generate and display commit messages before committing
+- 📋 **Custom Templates**: Create and manage your own prompt templates
+- 📡 **JSON Output**: Machine-readable output for automation
+- 🚀 **CLI Tool**: Simple command-line interface with sensible defaults
 - 🌐 **Web Demo**: Beautiful browser-based UI for quick commit messages
 - ⚡ **Zero Config**: Works out of the box with sensible defaults
 - 📦 **Easy Install**: `npm install -g vibecommit`
@@ -25,28 +28,103 @@ Generate meaningful, Conventional Commit-style messages with personality — pow
 ## 🚀 Quick Start
 
 ### Install globally
+
 ```bash
 npm install -g vibecommit
 ```
 
+### Initialize in your project
+
+```bash
+vibecommit init
+```
+
 ### Generate a commit message
+
 ```bash
 vibecommit --vibe professional
 ```
 
+### Install pre-commit hook (auto-suggests messages)
+
+```bash
+vibecommit hook install
+```
+
 ### Use with a diff file
+
 ```bash
 vibecommit --diff changes.patch
 ```
 
+### Get JSON output for automation
+
+```bash
+vibecommit --staged --json | jq '.subject'
+```
+
 ### Start the web demo
+
 ```bash
 vibecommit web --port 3000
 ```
 
 ## 📖 Usage
 
+### Main Commands
+
+```bash
+vibecommit [options]                          # Generate commit message
+vibecommit init                               # Initialize in current project
+vibecommit web --port 3000                    # Start web demo
+```
+
+### Hook Commands
+
+```bash
+vibecommit hook install    # Install pre-commit hook
+vibecommit hook remove     # Remove pre-commit hook
+vibecommit hook show       # Show hook status
+```
+
+### Template Commands
+
+```bash
+vibecommit templates list    # List available templates
+vibecommit templates add     # Add custom template from stdin
+vibecommit templates add -f template.txt  # Add from file
+```
+
 ### CLI Options
+
+```bash
+vibecommit [options]
+
+Options:
+  -v, --vibe <type>        Vibe mode (default: "professional")
+  -l, --lang <language>    Language: en, nl, de, fr, es (default: "en")
+  -d, --diff <file>        Path to a diff file
+  --staged                 Only use staged changes
+  -s, --staged-status      Show staged files before generating
+  -m, --message <text>     Use this as the commit message directly
+  -p, --prompt <text>      Add custom instruction to the prompt
+  --json                   Output as JSON
+  -n, --dry-run            Show staged files without generating
+  -h, --help               Show help
+  -V, --version            Show version number
+```
+
+### Vibe Modes
+
+| Mode | Style | Best For |
+|------|-------|----------|
+| `professional` | Conventional Commits, clean | Daily work, public repos |
+| `funny` | Humorous but clear | Internal teams, fun projects |
+| `minimal` | Shortest possible | Quick fixes, internal |
+| `creative` | Metaphors and analogies | Documentation, features |
+| `enterprise` | Formal, detailed, ticket refs | Enterprise, regulated |
+| `sarcastic` | Witty, slightly sarcastic | Close team, private repos |
+| `concise` | One-liner subject only | Automation, CI/CD |
 
 ```bash
 vibecommit [options]

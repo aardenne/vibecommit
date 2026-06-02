@@ -1,6 +1,6 @@
 {
   "name": "vibecommit",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "AI-powered commit message generator with vibe modes",
   "type": "module",
   "main": "dist/cli.js",
