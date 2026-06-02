@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeCommit - AI Commit Message Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔥 VibeCommit</h1>
+      <p class="subtitle">AI-Powered Commit Message Generator</p>
+    </header>
+
+    <main>
+      <div class="input-section">
+        <label for="diff-input">Git Diff</label>
+        <textarea id="diff-input" placeholder="Paste your git diff here...">
+diff --git a/src/main.ts b/src/main.ts
+index 1234567..abcdefg 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -1,5 +1,8 @@
+ import { Application } from './app';
+-import { config } from './config';
++import { config, Config } from './config';
++import { logger } from './logger';
+ 
+ const app = new Application(config.port);
+ 
++app.start();
++logger.info('Application started');
++
+diff --git a/src/config.ts b/src/config.ts
+index 9876543..fedcba9 100644
+--- a/src/config.ts
++++ b/src/config.ts
+@@ -1,4 +1,6 @@
+ export interface Config {
+   port: number;
++  logLevel: string;
++  debug: boolean;
+ }
+ 
+ export const config: Config = {
+   port: 3000,
++  logLevel: 'info',
++  debug: false
+ };
+</textarea>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="vibe-select">Vibe Mode</label>
+          <select id="vibe-select">
+            <option value="professional">💼 Professional</option>
+            <option value="enterprise">🏢 Enterprise</option>
+            <option value="minimal">⚡ Minimal</option>
+            <option value="funny">😄 Funny</option>
+            <option value="creative">🎨 Creative</option>
+            <option value="sarcastic">😏 Sarcastic</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="lang-select">Language</label>
+          <select id="lang-select">
+            <option value="en">🇬🇧 English</option>
+            <option value="nl">🇳🇱 Dutch</option>
+            <option value="de">🇩🇪 German</option>
+            <option value="fr">🇫🇷 French</option>
+          </select>
+        </div>
+
+        <button id="generate-btn" class="btn-primary">
+          🚀 Generate Commit Message
+        </button>
+      </div>
+
+      <div class="output-section">
+        <label>Generated Message</label>
+        <div id="output" class="output-box">
+          <p class="placeholder">Your commit message will appear here...</p>
+        </div>
+        <button id="copy-btn" class="btn-secondary" style="display: none;">
+          📋 Copy to Clipboard
+        </button>
+      </div>
+
+      <div class="api-config">
+        <label>OpenAI API Configuration</label>
+        <div class="input-row">
+          <input type="text" id="api-url" placeholder="Base URL (e.g., http://localhost:8081/v1)" value="http://localhost:8081/v1">
+        </div>
+        <div class="input-row">
+          <input type="text" id="api-key" placeholder="API Key (optional for Ollama/vLLM)">
+        </div>
+        <div class="input-row">
+          <input type="text" id="model-name" placeholder="Model name" value="Qwen3.6-35B-A3B-NVFP4">
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Built with ❤️ by 4R Consultancy • AI-powered commit messages</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

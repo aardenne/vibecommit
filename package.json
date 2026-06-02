@@ -1,0 +1,50 @@
+{
+  "name": "vibecommit",
+  "version": "1.0.0",
+  "description": "AI-powered commit message generator with vibe modes",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "vibecommit": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "web": "tsx src/web-demo.ts",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "openai": "^4.0.0",
+    "fastify": "^4.28.0",
+    "@fastify/static": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.7.0",
+    "vitest": "^1.6.0",
+    "@types/supertest": "^6.0.0",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "commit",
+    "message",
+    "ai",
+    "git",
+    "conventional-commits",
+    "cli",
+    "vibe"
+  ],
+  "author": "Mark Aardenne (4R Consultancy)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aardenne/vibecommit"
+  }
+}
