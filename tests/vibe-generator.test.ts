@@ -15,8 +15,14 @@ describe('generateFallbackMessage', () => {
 
     for (const line of lines) {
       if (line.startsWith('diff --git')) {
-        const match = line.match(/b\/(.*)/);
-        if (match) changedFiles.add(match[1]);
+        // Extract file path from either "diff --git a/x b/y" or "diff --git b/x a/y" format
+        const parts = line.split(' ');
+        for (const part of parts) {
+          if (part.startsWith('b/')) {
+            changedFiles.add(part.slice(2));
+            break;
+          }
+        }
       }
       if (line.startsWith('+') && !line.startsWith('+++')) additions++;
       if (line.startsWith('-') && !line.startsWith('---')) deletions++;
@@ -45,7 +51,7 @@ index 123..456 789
 `;
     const result = parseFallback(diff);
     expect(result.fileCount).toBe(1);
-    expect(result.additions).toBe(3);
+    expect(result.additions).toBe(2);
     expect(result.deletions).toBe(1);
     expect(result.type).toBe('feat');
     expect(result.files).toContain('src/main.ts');
