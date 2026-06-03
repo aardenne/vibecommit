@@ -9,5 +9,4 @@ export { generateCommitMessage } from './commit-generator.js';
 export { parseDiff, getStagedDiff } from './git-parser.js';
 export { loadConfig, Config } from './config.js';
 export { formatConventionalCommit, validateCommitMessage } from './formatter.js';
-export { AIProvider } from './types.js';
-export { commit } from './cli.js';
+export { AIProvider, CommitType } from './types.js';

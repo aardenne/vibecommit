@@ -9,6 +9,7 @@ import { generateCommitMessage } from './commit-generator.js';
 import { loadConfig, validateConfig } from './config.js';
 import { formatConventionalCommit, validateCommitMessage } from './formatter.js';
 import { hasStagedChanges } from './git-parser.js';
+import { CommitType } from './types.js';
 
 const program = new Command();
 
@@ -27,7 +28,7 @@ program
   .action(async (options) => {
     // Check staged changes
     if (!options.message && !hasStagedChanges()) {
-      console.error(chalk.red(`\n${figures.error} No staged changes found.`));
+      console.error(chalk.red(`\n${figures.cross} No staged changes found.`));
       console.error(chalk.yellow('Stage changes with: git add <files>'));
       process.exit(1);
     }
@@ -39,7 +40,7 @@ program
     // Validate config
     const errors = validateConfig(config);
     if (errors.length > 0) {
-      console.error(chalk.red(`\n${figures.error} Configuration error:`));
+      console.error(chalk.red(`\n${figures.cross} Configuration error:`));
       for (const error of errors) {
         console.error(chalk.red(`  - ${error}`));
       }
@@ -47,7 +48,7 @@ program
       process.exit(1);
     }
 
-    console.log(chalk.cyan(`\n${figures.lightHouse} Generating commit messages...`));
+    console.log(chalk.cyan(`\n${figures.info} Generating commit messages...`));
 
     try {
       // Generate suggestions
@@ -58,7 +59,7 @@ program
       }
 
       // Display suggestions
-      console.log(chalk.green(`\n${figures.check} ${messages.length} suggestion${messages.length > 1 ? 's' : ''} generated:\n`));
+      console.log(chalk.green(`\n${figures.tick} ${messages.length} suggestion${messages.length > 1 ? 's' : ''} generated:\n`));
 
       for (let i = 0; i < messages.length; i++) {
         const msg = messages[i];
@@ -91,13 +92,13 @@ program
           execSync(`git commit -m "${chosen}"`, { stdio: 'inherit' });
           console.log(chalk.green(`\n${figures.tick} Committed!`));
         } catch (error: any) {
-          console.error(chalk.red(`\n${figures.error} Git commit failed: ${error.message || 'Unknown error'}`));
+          console.error(chalk.red(`\n${figures.cross} Git commit failed: ${error.message || 'Unknown error'}`));
           process.exit(1);
         }
       }
 
     } catch (error: any) {
-      console.error(chalk.red(`\n${figures.error} Error: ${error.message || 'Unknown error'}`));
+      console.error(chalk.red(`\n${figures.cross} Error: ${error.message || 'Unknown error'}`));
       process.exit(1);
     }
   });
@@ -138,7 +139,7 @@ program
     if (validation.valid) {
       console.log(chalk.green(`${figures.tick} Valid conventional commit message`));
     } else {
-      console.log(chalk.red(`${figures.error} Invalid commit message:`));
+      console.log(chalk.red(`${figures.cross} Invalid commit message:`));
       for (const error of validation.errors) {
         console.log(chalk.red(`  - ${error}`));
       }
@@ -151,9 +152,8 @@ program
   .description('Format a commit message')
   .action((message: string) => {
     try {
-      const parsed = formatConventionalCommit;
       console.log(chalk.cyan(formatConventionalCommit({
-        type: 'feat',
+        type: CommitType.FEAT,
         subject: message,
       })));
     } catch (error: any) {

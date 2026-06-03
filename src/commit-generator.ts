@@ -6,9 +6,12 @@
 import OpenAI from 'openai';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { getStagedDiff, ParsedDiff, parseDiff } from './git-parser.js';
-import { Config, getProviderKey } from './config.js';
+import { Config, getProviderKey, loadConfig } from './config.js';
 import { formatConventionalCommit, parseCommitMessage, validateCommitMessage } from './formatter.js';
 import type { CommitMessage, CommitType } from './types.js';
+
+// Regex for conventional commit type
+const TYPE_PATTERN = /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(\w+\))?!?:/;
 
 const SYSTEM_PROMPT = `You are a commit message expert. Generate a conventional commit message from the provided git diff.
 
@@ -179,7 +182,7 @@ async function generateWithLocal(
     throw new Error(`Local AI API error: ${response.status} ${response.statusText}`);
   }
 
-  const data = await response.json();
+  const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
   return data.choices?.[0]?.message?.content || '';
 }
 
@@ -193,6 +196,3 @@ function fixCommitMessage(msg: string): string | null {
   }
   return null;
 }
-
-// Regex for conventional commit type
-const TYPE_PATTERN = /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(\w+\))?!?:/;
